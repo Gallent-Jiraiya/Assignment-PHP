@@ -20,6 +20,7 @@ if(extension_loaded("mongodb")){
     $databaseName="bookStore";
     $db=$client->$databaseName;
     $collection=$db->createCollection("books");
+    $collection=$client->bookStore->books;
     //echo "bookstore created";
     
 
@@ -55,8 +56,8 @@ if(extension_loaded("mongodb")){
       //   'price'=>39.99,
 
       // ]
-      ]);*/
-      //printf("Inserted %d document(s)\n", $insertOneRecord->getInsertedCount());
+      ]);
+      //printf("Inserted %d document(s)\n", $insertOneRecord->getInsertedCount());*/
       
     //$deleteResult = $collection->deleteMany();
 

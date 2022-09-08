@@ -24,10 +24,20 @@ for($i=0;$i<$xmlbooks->length;$i++){
     }*/
     echo("<tr>
         <td>".$xmlTitle."</td>".
+        //"<td>".implode("<br>",$authorArray)."</td>".
         "<td>".implode("<br>",$authorArray)."</td>".
         "<td>".$xmlYear."</td>".
         "<td>".$xmlPrice."</td>".
         "</tr>");
+    $insertOneRecord=$collection->insertOne([
+        'title'=>$xmlTitle,
+        'category'=>$xmlCategory,
+        'author'=>$authorArray,
+        'year'=>$xmlYear,
+        'price'=>$xmlPrice,
+      ]);
+      //printf("Inserted %d document(s)\n", $insertOneRecord->getInsertedCount());
+      //echo $insertOneRecord->getInsertedId();
   }
 }
 ?>
