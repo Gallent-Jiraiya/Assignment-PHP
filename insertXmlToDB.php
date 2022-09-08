@@ -1,5 +1,13 @@
 <?php
 require_once("connectDB.php");
+//drop database 
+$collection->drop();
+//createDB
+$databaseName="bookStore";
+$db=$client->$databaseName;
+$collection=$db->createCollection("books");
+$collection=$client->bookStore->books;
+
 
 $path=$_GET["path"];
 $xmlDoc = new DOMDocument();
@@ -22,13 +30,13 @@ for($i=0;$i<$xmlbooks->length;$i++){
       //$xmlAuthorsString += $author."br";
       echo "$xmlTitle";
     }*/
-    echo("<tr>
-        <td>".$xmlTitle."</td>".
-        //"<td>".implode("<br>",$authorArray)."</td>".
-        "<td>".implode("<br>",$authorArray)."</td>".
-        "<td>".$xmlYear."</td>".
-        "<td>".$xmlPrice."</td>".
-        "</tr>");
+    // echo("<tr>
+    //     <td>".$xmlTitle."</td>".
+    //     //"<td>".implode("<br>",$authorArray)."</td>".
+    //     "<td>".implode("<br>",$authorArray)."</td>".
+    //     "<td>".$xmlYear."</td>".
+    //     "<td>".$xmlPrice."</td>".
+    //     "</tr>");
     $insertOneRecord=$collection->insertOne([
         'title'=>$xmlTitle,
         'category'=>$xmlCategory,

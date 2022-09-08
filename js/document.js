@@ -23,6 +23,7 @@ try {
 
 
 //form controls
+
   const fields=document.querySelector('.fields');
   const add_Author=document.querySelector('#add_Author');
   const btn_submit=document.querySelector('#btn-submit');
@@ -31,70 +32,42 @@ try {
   const fieldYear=document.getElementById('year');
   const fieldaPrice=document.getElementById('price');
   const fieldAuthor=document.getElementById('author_01');
+
+loadEventListeners();
   
-  loadEventListeners();
-  
-  function loadEventListeners(){
-    document.addEventListener('DOMContentLoaded',readXML);
-    add_Author.addEventListener('click',addAuthorfield);
-    btn_submit.addEventListener('click',validateSubmit);
+function loadEventListeners(){
+  document.addEventListener('DOMContentLoaded',addXmlToMongo);
+  document.addEventListener('DOMContentLoaded',readMongo(""));
+  add_Author.addEventListener('click',addAuthorfield);
+  btn_submit.addEventListener('click',validateSubmit);
   }
   
   //lOAD XML DOCUMENT
-var xmlDoc;
-function readXML(){
+
+function addXmlToMongo(){
 var xhttp;
 var xml="xml/new.xml";
 xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      //addToDB(this);
-      loadTable(this);
+      alert("Database Updated with XML File")
     }
 };
 xhttp.open("GET", "insertXmlToDB.php?path="+xml, true);
 xhttp.send();
 }
-//Add xml to DB
-function addToDB(xml) {
-  var x, i,y; 
-  xmlDoc = xml.responseXML;
-  x = xmlDoc.getElementsByTagName("book");
 
-  for (i = 0; i < x.length; i++) { 
-    y=x[i].getElementsByTagName('author');
-    var z;
-    const authorArr=[];
-    for(z=0;z<y.length;z++){
-      authorArr.push(y[z].childNodes[0].nodeValue);
-      
-    }
-    var title=x[i].getElementsByTagName("title")[0].childNodes[0].nodeValue;
-    var category=x[i].getAttribute("category");
-    var price=x[i].getElementsByTagName("price")[0].childNodes[0].nodeValue;
-    var year=x[i].getElementsByTagName("year")[0].childNodes[0].nodeValue;
-   
-    //echo $title;
-    
-    /*$book=[
-      'title'=> ""
-    ];*/
-    // $insertOneRecord=$collection->insertOne([
-    //     'title'=>'XQuery Kick Start',
-    //     'category'=>'web',
-    //     'author'=>'James McGovern',
-    //     'year'=>2005,
-    //     'price'=>49.99,
-    
-    //   ]);
-  
-         
-  }
-}
 //DISPLAY XML FILE ON TABLE
-function loadTable(xml) {
-    document.querySelector('tbody').innerHTML=xml.responseText;      
-  
+function readMongo(title) {
+  var xhttp;
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        document.querySelector('tbody').innerHTML=this.responseText;
+      }
+  };
+  xhttp.open("GET", "readMongo.php?title="+title, true);
+  xhttp.send();
 }
   
   //FORM FUNCTIONS
