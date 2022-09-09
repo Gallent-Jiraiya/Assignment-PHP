@@ -7,6 +7,7 @@ if(extension_loaded("mongodb")){
   try{
     //create Client
     $client=new MongoDB\Client('mongodb+srv://'.$_ENV['MDB_USER'].':'.$_ENV['MDB_PASS'].'@'.$_ENV['ATLAS_CLUSTER_SRV'].'/');
+    
     $collection=$client->bookStore->books;
   }
   catch(Exception $e){

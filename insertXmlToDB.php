@@ -1,11 +1,11 @@
 <?php
 require_once("connectDB.php");
 //drop database 
-$collection->drop();
+//$collection->drop();
 //createDB
-$databaseName="bookStore";
-$db=$client->$databaseName;
-$collection=$db->createCollection("books");
+// $databaseName="bookStore";
+// $db=$client->$databaseName;
+// $collection=$db->createCollection("books");
 $collection=$client->bookStore->books;
 
 
