@@ -64,6 +64,34 @@ function readMongo(title) {
   xhttp.open("GET", "readMongo.php?title="+title, true);
   xhttp.send();
 }
+//add entry to XML
+/*function updateXML(entryArr){
+  var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var xml=this;
+      var x, y, i, newElement, txt, xmlDoc;
+      xmlDoc = xml.responseXML;
+      newElement = xmlDoc.createElement("edition");
+      x = xmlDoc.getElementsByTagName("book")[0]
+      x.appendChild(newElement);
+  
+     // Display all elements
+      xlen = x.childNodes.length;
+      y = x.firstChild;
+      txt = "";
+      for (i = 0; i < xlen; i++) {
+          if (y.nodeType == 1) {
+              txt += y.nodeName + "<br>";
+          }
+          y = y.nextSibling;
+      }
+      document.getElementById("demo").innerHTML = txt;
+    }
+};
+xhttp.open("GET", "books.xml", true);
+xhttp.send();
+}*/
 //add SIngle entry to DB
 function addEntry(entryArr) {
   var xhttp;
@@ -71,10 +99,15 @@ function addEntry(entryArr) {
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         alert('new entry has made')
+        //console.log(this.responseText);
+        readMongo("");
       }
   };
-  xhttp.open("GET", "addEntry.php?entry="+entryArr, true);
-  xhttp.send();
+  xhttp.open("POST", "addEntry.php", true);
+  xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded")
+  xhttp.send(entryArr);
+
+  updateXML(entryArr);
 }
   
   //FORM FUNCTIONS
@@ -114,13 +147,8 @@ function addEntry(entryArr) {
     var category=fieldCategory.value;
     var year=fieldYear.value;
     var price=fieldaPrice.value;
-    const book={
-      title: title,
-      category:category,
-      author:authorArr,
-      year:year,
-      price:price
-    }
+    const book=["title="+title+"&category="+category+"&author="+authorArr+"&year="+year+"&price="+price];
+    
     console.log(authorArr,title,category,year,price);
     addEntry(book);
   }
